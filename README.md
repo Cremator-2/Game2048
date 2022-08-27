@@ -1,6 +1,12 @@
 # Game 2048 with gesture control
 
-The project uses OpenCV and Mediapipe for gesture recognition. To run the game without recognition, use the Game2048.py script. To run with recognition - Gesture_control.py.
+In this project, the functionality of the game 2048 is copied.
+Implemented the functions of undo last move, counting and saving the best score of the selected player.
+The project uses OpenCV and Mediapipe for gesture recognition. 
+To run the game without recognition, use the Game2048.py script. 
+To run with recognition - Gesture_control.py. 
+
+# Gesture control
 
 To swap the playing field to the sides, use the index finger of your right hand.
 
