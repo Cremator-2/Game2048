@@ -50,7 +50,7 @@ To start a new game, squeeze your thumb.
 
 ![Game2048](https://user-images.githubusercontent.com/112019541/186515193-4edaa4ac-3388-4352-a538-23513f98f1a3.gif)
 
-[![2048 with gesture control](https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/cb8c967c-4a78-4ffa-8506-cbac69746f4f.png)](https://www.youtube.com/watch?v=AkxwrQtRAdE&ab_channel=%D0%98%D0%BB%D1%8C%D1%8F%D0%90%D0%B7%D0%B8%D0%BD)
+[![2048 with gesture control](https://user-images.githubusercontent.com/112019541/188335316-c3d8f86d-263d-47f5-9031-f3caf4d1bc35.jpg)](https://www.youtube.com/watch?v=AkxwrQtRAdE&ab_channel=%D0%98%D0%BB%D1%8C%D1%8F%D0%90%D0%B7%D0%B8%D0%BD)
 
 Link to video: https://www.youtube.com/watch?v=AkxwrQtRAdE&ab_channel=%D0%98%D0%BB%D1%8C%D1%8F%D0%90%D0%B7%D0%B8%D0%BD
 
