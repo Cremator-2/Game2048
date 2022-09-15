@@ -7,7 +7,7 @@ import os
 
 class Game2048:
     # класс обработки игровых ф-ий
-    
+
     @staticmethod
     def write_score(username: str, score):
         if not os.path.exists('best_score'):
@@ -346,7 +346,7 @@ class Game2048:
         self.game_field = self.previous_game_field_for_undo.copy()
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # данная точка входа для управления с клавиатуры
 
     game = Game2048()
 

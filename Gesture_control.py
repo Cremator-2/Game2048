@@ -1,10 +1,10 @@
 import cv2
 import mediapipe as mp
-import Game2048 as Game
+from Game2048 import Game2048 as Game
 from ui import cv2_ui_cam as vis
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # данная точка входа для управления жестами
 
     x_previous = 320
     mark_x = 320
@@ -20,14 +20,14 @@ if __name__ == '__main__':
 
     cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 
-    game = Game.Game2048()
+    game = Game()
 
     player = input('Enter the username: ')
     try:
-        best_score = Game.Game2048.read_score(player)
+        best_score = Game.read_score(player)
     except IOError:
         best_score = 0
-        Game.Game2048.write_score(player, best_score)
+        Game.write_score(player, best_score)
 
     game_score = 0
     game_end = False
@@ -98,7 +98,7 @@ if __name__ == '__main__':
                         game_end_lock = game_end
                         game_end = False
                         game_score = 0
-                        game = Game.Game2048()
+                        game = Game()
 
                     mp_drawing.draw_landmarks(image,
                                               hand_landmarks,
@@ -115,8 +115,8 @@ if __name__ == '__main__':
                 game_end_lock = game_end
 
             if game_score > best_score:
-                Game.Game2048.write_score(player, game_score)
-                best_score = Game.Game2048.read_score(player)
+                Game.write_score(player, game_score)
+                best_score = Game.read_score(player)
 
             vis.image_game_field(game.game_field, game_score, best_score, game_end_lock)
             cv2.imshow('Hands control', cv2.flip(image, 1))
