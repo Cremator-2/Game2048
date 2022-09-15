@@ -5,21 +5,21 @@ import cv2
 import os
 
 
-def write_score(username: str, score):
-    if not os.path.exists('best_score'):
-        os.makedirs('best_score')
-    with open(f'best_score/{username}.txt', 'w') as f:
-        f.write(str(score))
-
-
-def read_score(username: str) -> int:
-    with open(f'best_score/{username}.txt', 'r') as f:
-        score = int(f.read())
-    return score
-
-
 class Game2048:
     # класс обработки игровых ф-ий
+    
+    @staticmethod
+    def write_score(username: str, score):
+        if not os.path.exists('best_score'):
+            os.makedirs('best_score')
+        with open(f'best_score/{username}.txt', 'w') as f:
+            f.write(str(score))
+
+    @staticmethod
+    def read_score(username: str) -> int:
+        with open(f'best_score/{username}.txt', 'r') as f:
+            score = int(f.read())
+        return score
 
     def __init__(self):
         # здесь создается игровое поле и объявляются массивы данных
@@ -352,10 +352,10 @@ if __name__ == '__main__':
 
     player = input('Enter the username: ')
     try:
-        best_score = read_score(player)
+        best_score = Game2048.read_score(player)
     except IOError:
         best_score = 0
-        write_score(player, best_score)
+        Game2048.write_score(player, best_score)
 
     game_score = 0
     game_end = False
@@ -395,8 +395,8 @@ if __name__ == '__main__':
             game_end_lock = game_end
 
         if game_score > best_score:
-            write_score(player, game_score)
-            best_score = read_score(player)
+            Game2048.write_score(player, game_score)
+            best_score = Game2048.read_score(player)
         vis.image_game_field(game.game_field, player, game_score, best_score, game_end_lock)
 
     cv2.destroyAllWindows()

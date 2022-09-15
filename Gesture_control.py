@@ -24,10 +24,10 @@ if __name__ == '__main__':
 
     player = input('Enter the username: ')
     try:
-        best_score = Game.read_score(player)
+        best_score = Game.Game2048.read_score(player)
     except IOError:
         best_score = 0
-        Game.write_score(player, best_score)
+        Game.Game2048.write_score(player, best_score)
 
     game_score = 0
     game_end = False
@@ -115,10 +115,10 @@ if __name__ == '__main__':
                 game_end_lock = game_end
 
             if game_score > best_score:
-                Game.write_score(player, game_score)
-                best_score = Game.read_score(player)
+                Game.Game2048.write_score(player, game_score)
+                best_score = Game.Game2048.read_score(player)
 
-            vis.image_game_field(game.game_field, player, game_score, best_score, game_end_lock)
+            vis.image_game_field(game.game_field, game_score, best_score, game_end_lock)
             cv2.imshow('Hands control', cv2.flip(image, 1))
 
             key = cv2.waitKey(10)
