@@ -137,7 +137,7 @@ def image_game_field(visual_field, current_score, max_score, game_over):
     return frame
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # данная точка входа только для отладки функции выше
 
     game_field = np.zeros((4, 4), dtype=int)
 
