@@ -3,7 +3,7 @@ import numpy as np
 import math
 
 
-def image_game_field(visual_field, user, current_score, max_score, game_over):
+def image_game_field(visual_field, current_score, max_score, game_over):
 
     height = 720
     width = 640
@@ -161,11 +161,10 @@ if __name__ == '__main__':
     game_field[3][2] = 32768
     game_field[3][3] = 0
 
-    player = '1'
     score = 68
     best_score = 222
     end_game = True
-    img = image_game_field(game_field, player, score, best_score, end_game)
+    img = image_game_field(game_field, score, best_score, end_game)
 
     while True:
 
