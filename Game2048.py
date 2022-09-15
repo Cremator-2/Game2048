@@ -2,21 +2,20 @@ from random import choice, choices, sample
 import numpy as np
 from ui import cv2_ui_keyboard as vis
 import cv2
+import os
 
 
-def write_score(score, username):
-    # запись счета в файл
-    file = open('best_score_' + username, 'w')  # если такого файла нет - создать
-    file.write(str(score))  # содержимое удаляется, записывается новое значение
-    file.close()
+def write_score(username: str, score):
+    if not os.path.exists('best_score'):
+        os.makedirs('best_score')
+    with open(f'best_score/{username}.txt', 'w') as f:
+        f.write(str(score))
 
 
-def read_score(username):
-    # чтение файла
-    file = open('best_score_' + username, 'r')
-    score = file.read()
-    file.close()
-    return int(score)
+def read_score(username: str) -> int:
+    with open(f'best_score/{username}.txt', 'r') as f:
+        score = int(f.read())
+    return score
 
 
 class Game2048:
@@ -47,7 +46,7 @@ class Game2048:
         self.none_recursion = True
         self.score = 0
         self.previous_score = 0
-        self.previous_matrix()
+        self._previous_matrix()
 
     def swap_left(self):
         # метод обработки движения влево
@@ -80,13 +79,13 @@ class Game2048:
                         self.game_field[i][j] = self.game_field[i][j + 1]
                         self.game_field[i][j + 1] = 0
             if k == 0:  # чтобы не суммировать до упора
-                self.sum_elements(direction='left')  # суммирование строк влево
+                self._sum_elements(direction='left')  # суммирование строк влево
 
-        self.previous_matrix()  # если появилось изменение игрового поля
+        self._previous_matrix()  # если появилось изменение игрового поля
         if not self.accordance:
-            self.add_random_element()  # создаем случайный элемент при действии
+            self._add_random_element()  # создаем случайный элемент при действии
             if self.none_recursion:  # защита от рекурсии
-                game_over_tag_left = self.game_over_check()  # проверка конца игры
+                game_over_tag_left = self._game_over_check()  # проверка конца игры
                 return game_over_tag_left, self.score  # возвращаем True если нет возможных ходов или суммирований/счет
         return False, self.score
 
@@ -122,13 +121,13 @@ class Game2048:
                         self.game_field[i][j] = self.game_field[i][j - 1]
                         self.game_field[i][j - 1] = 0
             if k == 0:
-                self.sum_elements(direction='right')
+                self._sum_elements(direction='right')
 
-        self.previous_matrix()
+        self._previous_matrix()
         if not self.accordance:
-            self.add_random_element()
+            self._add_random_element()
             if self.none_recursion:
-                game_over_tag_right = self.game_over_check()
+                game_over_tag_right = self._game_over_check()
                 return game_over_tag_right, self.score
         return False, self.score
 
@@ -164,13 +163,13 @@ class Game2048:
                         self.game_field[i][j] = self.game_field[i - 1][j]
                         self.game_field[i - 1][j] = 0
             if k == 0:
-                self.sum_elements(direction='down')
+                self._sum_elements(direction='down')
 
-        self.previous_matrix()
+        self._previous_matrix()
         if not self.accordance:
-            self.add_random_element()
+            self._add_random_element()
             if self.none_recursion:
-                game_over_tag_down = self.game_over_check()
+                game_over_tag_down = self._game_over_check()
                 return game_over_tag_down, self.score
         return False, self.score
 
@@ -206,17 +205,17 @@ class Game2048:
                         self.game_field[i + 1][j] = 0
 
             if k == 0:
-                self.sum_elements(direction='up')
+                self._sum_elements(direction='up')
 
-        self.previous_matrix()
+        self._previous_matrix()
         if not self.accordance:
-            self.add_random_element()
+            self._add_random_element()
             if self.none_recursion:
-                game_over_tag_up = self.game_over_check()
+                game_over_tag_up = self._game_over_check()
                 return game_over_tag_up, self.score
         return False, self.score
 
-    def sum_elements(self, direction):
+    def _sum_elements(self, direction):
 
         if direction == 'left':  # суммирование влево
             for j in range(4):
@@ -277,7 +276,7 @@ class Game2048:
                                 self.score += self.game_field[i][j]
                             self.game_field[i + 1][j] = 0
 
-    def add_random_element(self):
+    def _add_random_element(self):
         # метод создания нового значения при сдвиге
         index_zeros = []  # список свободных ячеек
 
@@ -290,7 +289,7 @@ class Game2048:
         new_value = choices([4, 2], cum_weights=(1, 3), k=1)[0]
         self.game_field[x][y] = new_value  # запись в игровое поле
 
-    def previous_matrix(self):
+    def _previous_matrix(self):
         # метод определяющий было ли изменено игровое поле последним действием
         for i in range(4):
             for j in range(4):
@@ -300,7 +299,7 @@ class Game2048:
                     self.accordance = False
                     return
 
-    def game_over_check(self):
+    def _game_over_check(self):
 
         # метод проверки на отсутствие ходов
         self.none_recursion = False  # включаем защиту от рекурсии
@@ -322,7 +321,7 @@ class Game2048:
             elif i == 3:
                 self.swap_up()  # проверка движения вверх
 
-            self.previous_matrix()
+            self._previous_matrix()
 
             if self.accordance:
                 if i == 0:
@@ -355,8 +354,8 @@ if __name__ == '__main__':
     try:
         best_score = read_score(player)
     except IOError:
-        write_score(0, player)
         best_score = 0
+        write_score(player, best_score)
 
     game_score = 0
     game_end = False
@@ -396,7 +395,7 @@ if __name__ == '__main__':
             game_end_lock = game_end
 
         if game_score > best_score:
-            write_score(game_score, player)
+            write_score(player, game_score)
             best_score = read_score(player)
         vis.image_game_field(game.game_field, player, game_score, best_score, game_end_lock)
 

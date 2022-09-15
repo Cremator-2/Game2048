@@ -26,8 +26,8 @@ if __name__ == '__main__':
     try:
         best_score = Game.read_score(player)
     except IOError:
-        Game.write_score(0, player)
         best_score = 0
+        Game.write_score(player, best_score)
 
     game_score = 0
     game_end = False
@@ -115,7 +115,7 @@ if __name__ == '__main__':
                 game_end_lock = game_end
 
             if game_score > best_score:
-                Game.write_score(game_score, player)
+                Game.write_score(player, game_score)
                 best_score = Game.read_score(player)
 
             vis.image_game_field(game.game_field, player, game_score, best_score, game_end_lock)
